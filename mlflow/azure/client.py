@@ -67,8 +67,9 @@ def patch_adls_file_upload(sas_url, local_file, start_byte, size, position, head
             _logger.debug("Removed unsupported '%s' header for ADLS Gen2 Patch operation", name)
 
     data = read_chunk(local_file, size, start_byte)
+    print('Requesting with timeout!!!')
     with rest_utils.cloud_storage_http_request(
-        "patch", request_url, data=data, headers=request_headers
+        "patch", request_url, data=data, headers=request_headers, timeout=30
     ) as response:
         rest_utils.augmented_raise_for_status(response)
 
